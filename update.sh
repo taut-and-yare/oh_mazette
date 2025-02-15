@@ -43,27 +43,33 @@ if diff -q "$REQ_DIR/requirements.old.txt" "$REQ_FILE" > /dev/null; then
     exit 0  # Exit script without continuing to build/tests
 fi
 
-# Extract changed dependencies
-CHANGES=$(diff -u "$REQ_DIR/requirements.old.txt" "$REQ_FILE" | grep -E '^\+' | tail -n +2 | cut -c 2-)
 rm "$REQ_DIR/requirements.old.txt"
 
-echo "📦 Changes detected in dependencies:"
-echo "$CHANGES"
+echo "📦 Dependencies updated successfully."
 
 echo "📦 Building the Docker stack..."
 docker compose -f docker-compose.local.yml build
 
 echo "🧪 Running tests..."
 if docker compose -f docker-compose.local.yml run --rm django pytest -s; then
-    echo "✅ Tests passed! Committing changes..."
+    echo "✅ Tests passed!"
+
+    # Ask for a commit message
+    echo "📝 Enter a commit message:"
+    read -r COMMIT_MSG
 
     git add "$REQ_FILE"
-    COMMIT_MSG="Update dependencies: $(echo "$CHANGES" | tr '\n' ' ') ✅"
-
     git commit -m "$COMMIT_MSG"
-    git push
 
-    echo "🚀 Changes pushed successfully!"
+    # Ask for confirmation before pushing
+    echo "🚀 Ready to push? (Y/n)"
+    read -r CONFIRM
+    if [[ "$CONFIRM" =~ ^[Yy]$ || -z "$CONFIRM" ]]; then
+        git push
+        echo "✅ Changes pushed successfully!"
+    else
+        echo "❌ Push aborted."
+    fi
 else
     echo "❌ Tests failed! Fix errors before committing."
     exit 1  # Stop execution if tests fail
