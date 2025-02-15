@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=oh_mazette
+POSTGRES_USER=tLcSmdXSIxMgXwSmcuTZAliEKMyEAWna
+POSTGRES_PASSWORD=v0cppFaydK6nrxyM7S9ujQ9O71d94ZgaskGf9RjY1hQSpqMKR9BpvPpDT62LwSlv
