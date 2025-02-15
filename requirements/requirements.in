@@ -1,0 +1,74 @@
+# ==============================================================================
+# Base.txt
+# ==============================================================================
+
+python-slugify
+Pillow
+rcssmin
+argon2-cffi
+whitenoise
+redis
+hiredis
+celery
+django-celery-beat
+flower
+
+# Django
+# ------------------------------------------------------------------------------
+django
+django-environ
+django-model-utils
+django-allauth[mfa]
+django-crispy-forms
+crispy-bootstrap5
+django-compressor
+django-redis
+
+# ==============================================================================
+# Production.txt
+# ==============================================================================
+
+gunicorn
+psycopg[c]
+sentry-sdk
+
+# Django
+# ------------------------------------------------------------------------------
+django-anymail[mailjet]
+
+# ==============================================================================
+# Local.txt
+# ==============================================================================
+
+Werkzeug[watchdog]
+ipdb
+psycopg[c]
+watchfiles
+
+# Testing
+# ------------------------------------------------------------------------------
+mypy
+django-stubs[compatible-mypy]
+pytest
+pytest-sugar
+
+# Documentation
+# ------------------------------------------------------------------------------
+sphinx
+sphinx-autobuild
+
+# Code quality
+# ------------------------------------------------------------------------------
+ruff
+coverage
+djlint
+pre-commit
+
+# Django
+# ------------------------------------------------------------------------------
+factory-boy
+
+django-debug-toolbar
+django-extensions
+django-coverage-plugin
+pytest-django

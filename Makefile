@@ -12,3 +12,6 @@ migrate:
 
 test:
 	docker compose -f docker-compose.local.yml run --rm django pytest -s
+
+update:
+	./update.sh
