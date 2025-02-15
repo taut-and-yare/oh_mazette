@@ -18,11 +18,7 @@
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}" />
     {% block css %}
       <!-- Latest compiled and minified Bootstrap CSS -->
-      <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
-            integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer" />
+      {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> {% endcomment %}
       <!-- Your stuff: Third-party CSS libraries go here -->
       <!-- This file stores project-specific CSS -->
       {% compress css %}
@@ -34,14 +30,11 @@
     {# Placed at the top of the document so pages load faster with defer #}
     {% block javascript %}
       <!-- Bootstrap JS -->
-      <script defer
-              src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"
-              integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g=="
-              crossorigin="anonymous"
-              referrerpolicy="no-referrer"></script>
+      {% comment %} <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> {% endcomment %}
       <!-- Your stuff: Third-party javascript libraries go here -->
       <!-- place project specific Javascript in this file -->
       {% compress js %}
+        <script defer src="{% static 'js/alpine.min.js' %}"></script>
         <script defer src="{% static 'js/htmx.min.js' %}"></script>
         <script defer src="{% static 'js/project.js' %}"></script>
       {% endcompress %}
@@ -49,57 +42,10 @@
   </head>
   <body class="{% block bodyclass %}{% endblock bodyclass %}">
     {% block body %}
-      <div class="mb-1">
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-          <div class="container-fluid">
-            <button class="navbar-toggler navbar-toggler-right"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'home' %}">Oh Mazette !</a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="{% url 'home' %}">Home <span class="visually-hidden">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'about' %}">About</a>
-                </li>
-                {% if request.user.is_authenticated %}
-                  <li class="nav-item">
-                    <a class="nav-link"
-                       href="{% url 'users:detail' request.user.username %}">{% translate "My Profile" %}</a>
-                  </li>
-                  <li class="nav-item">
-                    {# URL provided by django-allauth/account/urls.py #}
-                    <a class="nav-link" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a>
-                  </li>
-                {% else %}
-                  {% if ACCOUNT_ALLOW_REGISTRATION %}
-                    <li class="nav-item">
-                      {# URL provided by django-allauth/account/urls.py #}
-                      <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% translate "Sign Up" %}</a>
-                    </li>
-                  {% endif %}
-                  <li class="nav-item">
-                    {# URL provided by django-allauth/account/urls.py #}
-                    <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% translate "Sign In" %}</a>
-                  </li>
-                {% endif %}
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
       <div class="container">
         {% if messages %}
           {% for message in messages %}
-            <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            <div class="{% if message.tags %}alert-{{ message.tags }}{% endif %}">
               {{ message }}
               <button type="button"
                       class="btn-close"
