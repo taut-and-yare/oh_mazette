@@ -14,8 +14,8 @@ django:
 # 	docker compose -f docker-compose.local.yml up django & \
 # 	wait
 dev:
-	stdbuf -oL npx tailwindcss -i ./oh_mazette/static/css/tailwind.css -o ./oh_mazette/static/css/styles.css --content "./oh_mazette/**/templates/**/*.html" | awk '{print "\033[1;32m[Tailwind]\033[0m", $$0}' & \
-	stdbuf -oL docker compose -f docker-compose.local.yml up django | awk '{print "\033[1;34m[Django]\033[0m", $$0}' & \
+	unbuffer npx tailwindcss -i ./oh_mazette/static/css/tailwind.css -o ./oh_mazette/static/css/styles.css --watch | awk '{print "\033[1;32m[Tailwind]\033[0m", $$0}' & \
+	unbuffer docker compose -f docker-compose.local.yml up django | awk '{print "\033[1;34m[Django]\033[0m", $$0}' & \
 	wait
 
 build:
