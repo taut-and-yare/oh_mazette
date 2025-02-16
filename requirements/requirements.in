@@ -23,6 +23,7 @@ django-crispy-forms
 crispy-bootstrap5
 django-compressor
 django-redis
+wagtail
 
 # ==============================================================================
 # Production.txt

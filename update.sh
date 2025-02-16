@@ -58,7 +58,8 @@ if docker compose -f docker-compose.local.yml run --rm django pytest -s; then
     echo "📝 Enter a commit message:"
     read -r COMMIT_MSG
 
-    git add "$REQ_FILE"
+    # Add both requirements.txt and requirements.in
+    git add "$REQ_FILE" "$REQ_IN_FILE"
     git commit -m "$COMMIT_MSG"
 
     # Ask for confirmation before pushing
