@@ -42,7 +42,7 @@
   </head>
   <body class="{% block bodyclass %}{% endblock bodyclass %}">
     {% block body %}
-      <div class="container text-red-500">
+      <div class="container">
         {% if messages %}
           {% for message in messages %}
             <div class="{% if message.tags %}alert-{{ message.tags }}{% endif %}">
