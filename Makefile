@@ -3,11 +3,27 @@ tailwind_build:
 
 push: tailwind_build
 	@git status -s  # Show changed files
-	@read -p "Enter commit message (leave blank to cancel): " msg; \
+	@read -p "Enter commit message (leave blank to cancel): " msg && \
 	if [ -z "$$msg" ]; then \
 		echo "Commit canceled."; \
+		exit 1; \
 	else \
-		git add . && git commit -m "$$msg" && git push; \
+		pre-commit run --all-files || { \
+			echo "Some changes were made during pre-commit checks."; \
+			git status -s; \
+			read -p "Do you want to stage these changes? (y/n): " answer; \
+			if [ "$$answer" = "y" ]; then \
+				git add .; \
+				pre-commit run --all-files || exit 1; \
+				echo "Changes staged."; \
+				git commit -m "$$msg" && git push; \
+			else \
+				echo "Changes not staged."; \
+				exit 1; \
+			fi; \
+		} || { \
+			git commit -m "$$msg" && git push; \
+		}; \
 	fi
 
 django:
